@@ -1,0 +1,13 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'us-east1-docker.pkg.dev/cloudk8s-389823/reg1/image-dir', '.' ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', 'us-east1-docker.pkg.dev/cloudk8s-389823/reg1/image-dir']
+  - name: "gcr.io/cloud-builders/gke-deploy"
+    args:
+    - run
+    - --filename=./kube-config/
+    - --location=us-east1-b
+    - --cluster=cluster-1
+images:
+  - 'us-east1-docker.pkg.dev/cloudk8s-389823/reg1/image-dir'
